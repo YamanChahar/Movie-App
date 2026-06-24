@@ -9,6 +9,20 @@ function Home(){
     const[error,setError]=useState(null);
     const[loading, setLoading]=useState(true);
 
+    const [selectedGenre, setSelectedGenre] = useState("All");
+
+    <select
+  value={selectedGenre}
+  onChange={(e) => setSelectedGenre(e.target.value)}
+>
+  <option value="All">All Movies</option>
+  <option value="Action">Action</option>
+  <option value="Drama">Drama</option>
+  <option value="Romance">Romance</option>
+  <option value="Comedy">Comedy</option>
+  <option value="Thriller">Thriller</option>
+</select>
+
     useEffect(()=>{
     const loadPopularMovies=async()=>{
         try{
@@ -63,10 +77,14 @@ function Home(){
         {movies.map(movie=>(
             movie.title.toLowerCase().startsWith(searchQuery)&&( 
             <MovieCard key={movie.id} movie={movie} />)))}
+
+        
     </div>
        )}
    </div>
        )
+
+    
 }
 
 export default Home; 
