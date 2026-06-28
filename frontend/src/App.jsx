@@ -4,10 +4,12 @@ import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
 import { MovieProvider } from "./contexts/MovieContext";
 import NavBar from "./components/NavBar";
+import ScrollingBackground from "./components/ScrollingBackground";
 
 function App() {
   return (
     <MovieProvider>
+      <ScrollingBackground />
       <NavBar />
       <main className="main-content">
         <Routes>
