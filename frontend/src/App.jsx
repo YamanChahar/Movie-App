@@ -2,13 +2,16 @@ import "./App.css";
 import Favorites from "./pages/Favorites";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
-import { MovieProvider } from "./contexts/MovieContext";
+import { MovieProvider, useMovieContext } from "./contexts/MovieContext";
 import NavBar from "./components/NavBar";
 import ScrollingBackground from "./components/ScrollingBackground";
+import MovieDetailModal from "./components/MovieDetailModal";
 
-function App() {
+function AppContent() {
+  const { selectedMovie, setSelectedMovie } = useMovieContext();
+
   return (
-    <MovieProvider>
+    <>
       <ScrollingBackground />
       <NavBar />
       <main className="main-content">
@@ -17,6 +20,20 @@ function App() {
           <Route path="/favorites" element={<Favorites />} />
         </Routes>
       </main>
+      {selectedMovie && (
+        <MovieDetailModal
+          movie={selectedMovie}
+          onClose={() => setSelectedMovie(null)}
+        />
+      )}
+    </>
+  );
+}
+
+function App() {
+  return (
+    <MovieProvider>
+      <AppContent />
     </MovieProvider>
   );
 }
