@@ -6,99 +6,114 @@
   height: 100vh;
   z-index: -2;
   overflow: hidden;
-  background-color: #000;
+  background-color: #050508;
   pointer-events: none;
 }
 
-/* Background grid styling */
-.bg-scrolling-wrapper {
+/* --- Ambient Cinematic Drifting Glows --- */
+.ambient-light {
   position: absolute;
-  top: -20%;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.ambient-light.light-blue {
+  top: -10%;
   left: -10%;
-  width: 120%;
-  height: 140%;
-  transform: rotate(-6deg) skewX(-2deg);
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 20px;
-  opacity: 0.28; /* Subtly dimmed grid so content stays fully readable */
+  width: 60vw;
+  height: 60vw;
+  background-color: rgba(30, 100, 255, 0.45);
+  animation: driftBlue 25s ease-in-out infinite alternate;
 }
 
-.bg-poster-row {
-  display: flex;
-  gap: 20px;
-  width: max-content;
-  will-change: transform;
+.ambient-light.light-purple {
+  bottom: -10%;
+  right: -10%;
+  width: 70vw;
+  height: 70vw;
+  background-color: rgba(140, 20, 255, 0.4);
+  animation: driftPurple 30s ease-in-out infinite alternate;
 }
 
-.bg-poster-item {
-  width: 130px;
-  height: 195px;
-  flex-shrink: 0;
-  border-radius: 6px;
-  overflow: hidden;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  background-color: #111;
+.ambient-light.light-pink {
+  top: 40%;
+  left: 30%;
+  width: 50vw;
+  height: 50vw;
+  background-color: rgba(255, 40, 100, 0.3);
+  animation: driftPink 20s ease-in-out infinite alternate;
 }
 
-.bg-poster-item img {
+/* Complex drifting keyframes */
+@keyframes driftBlue {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(20vw, 15vh) scale(1.2); }
+  100% { transform: translate(10vw, 40vh) scale(0.9); }
+}
+
+@keyframes driftPurple {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-30vw, -10vh) scale(1.1); }
+  100% { transform: translate(-10vw, -30vh) scale(1.3); }
+}
+
+@keyframes driftPink {
+  0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+  50% { transform: translate(30vw, -20vh) scale(1.4); opacity: 0.5; }
+  100% { transform: translate(40vw, 10vh) scale(0.8); opacity: 0.3; }
+}
+
+/* --- Cinematic Floating Dust/Particles --- */
+.particles-container {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  display: block;
+  z-index: 1;
 }
 
-/* Infinite Scrolling Animations */
-.scroll-left {
-  animation: bgScrollLeft 60s linear infinite;
+.particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  box-shadow: 0 0 8px 2px rgba(255, 255, 255, 0.4);
+  opacity: 0;
+  animation-name: floatParticle;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }
 
-.scroll-right {
-  animation: bgScrollRight 60s linear infinite;
-}
-
-@keyframes bgScrollLeft {
+@keyframes floatParticle {
   0% {
-    transform: translateX(0);
+    transform: translateY(0) scale(0.5);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-20vh) scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(-40vh) scale(1.2);
   }
   100% {
-    transform: translateX(-33.33333%);
+    transform: translateY(-60vh) scale(0.5);
+    opacity: 0;
   }
 }
 
-@keyframes bgScrollRight {
-  0% {
-    transform: translateX(-33.33333%);
-  }
-  100% {
-    transform: translateX(0);
-  }
-}
-
-/* Dark vignette & linear shadow cover */
+/* --- Premium Vignette Mask --- */
 .bg-overlay-mask {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.85) 75%, #0c0c0c 100%),
-              linear-gradient(to bottom, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.3) 50%, rgba(0, 0, 0, 0.7) 100%);
-  z-index: -1;
-}
-
-/* Responsive scaling of background posters */
-@media (max-width: 768px) {
-  .bg-poster-item {
-    width: 90px;
-    height: 135px;
-  }
-  .bg-scrolling-wrapper {
-    gap: 15px;
-  }
-  .bg-poster-row {
-    gap: 15px;
-  }
+  background: radial-gradient(circle at center, rgba(5,5,8,0.1) 0%, rgba(5,5,8,0.95) 100%);
+  z-index: 2;
 }
